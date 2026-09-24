@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+# Swp file
+*.swp
+
 # Log file
 *.log
 
