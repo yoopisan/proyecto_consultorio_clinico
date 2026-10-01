@@ -9,6 +9,7 @@ public class Principal {
     private static Scanner scanner = new Scanner(System.in);
     // Esta es una lista de objetos de tipo Doctor, que se utiliza para almacenar los doctores registrados en el sistema.
     private static List<Doctor> doctores = new ArrayList<>();
+    private static List<Paciente> pacientes = new ArrayList<>();
 
     public static void main(String[] args) {
         int opcion;
@@ -21,10 +22,7 @@ public class Principal {
                         registrarDoctor();
                         break;
                     case 2:
-                        System.out.println(
-                                "En desarrollo..."
-                        );
-                        //registrarPaciente();
+                        registrarPaciente();
                         break;
                     case 3:
                         System.out.println(
@@ -36,10 +34,7 @@ public class Principal {
                         consultarDoctores();
                         break;
                     case 5:
-                        System.out.println(
-                                "En desarrollo..."
-                        );
-                        //consultarPacientes();
+                        consultarPacientes();
                         break;
                     case 6:
                         System.out.println(
@@ -87,33 +82,73 @@ public class Principal {
     }
 
     private static void registrarDoctor() {
-        // Registrar un nuevo doctor en el sistema
+        // Registra un nuevo doctor en el sistema
         System.out.println();
         System.out.println("=== REGISTRAR DOCTOR ===");
         String id = leerTexto(
                 "Identificador: "
         );
+        // Verifica si ya existe un doctor con el mismo identificador
         if (buscarDoctor(id) != null) {
             System.out.println(
                     "Ya existe un doctor con ese identificador."
             );
             return;
         }
+        // Solicita al usuario el nombre completo y la especialidad del doctor
         String nombre = leerTexto(
                 "Nombre completo: "
         );
+        // Solicita al usuario la especialidad del doctor
         String especialidad = leerTexto(
                 "Especialidad: "
         );
+        // Crea un nuevo objeto Doctor con el identificador, nombre y especialidad proporcionados
         Doctor doctor = new Doctor(
                 id,
                 nombre,
                 especialidad
         );
+        // Agrega el doctor a la lista de doctores registrados
         doctores.add(doctor);
         // archivoCSV.guardarDoctor(doctor);
         System.out.println(
                 "Doctor registrado correctamente."
+        );
+    }
+
+    private static void registrarPaciente() {
+        // Registra un nuevo paciente en el sistema
+        System.out.println();
+        System.out.println("=== REGISTRAR PACIENTE ===");
+        // Solicita al usuario el identificador y nombre completo del paciente
+        String id = leerTexto(
+                "Identificador: "
+        );
+        // Verifica si ya existe un paciente con el mismo identificador
+        if (buscarPaciente(id) != null) {
+
+            System.out.println(
+                    "Ya existe un paciente con ese identificador."
+            );
+
+            return;
+        }
+        // Solicita al usuario el nombre completo del paciente
+        String nombre = leerTexto(
+                "Nombre completo: "
+        );
+        // Crea un nuevo objeto Paciente con el identificador y nombre proporcionados
+        Paciente paciente = new Paciente(
+                id,
+                nombre
+        );
+        // Agregar el paciente a la lista de pacientes registrados
+        pacientes.add(paciente);
+        // archivoCSV.guardarPaciente(paciente);
+        // Imprime un mensaje indicando que el paciente ha sido registrado correctamente
+        System.out.println(
+                "Paciente registrado correctamente."
         );
     }
 
@@ -132,11 +167,36 @@ public class Principal {
         }
     }
 
+    private static void consultarPacientes() {
+        // Consultar y mostrar la lista de pacientes registrados en el sistema
+        System.out.println();
+        System.out.println("=== PACIENTES ===");
+        if (pacientes.isEmpty()) {
+            System.out.println(
+                    "No hay pacientes registrados."
+            );
+            return;
+        }
+        for (Paciente paciente : pacientes) {
+            System.out.println(paciente);
+        }
+    }
+
     private static Doctor buscarDoctor(String id) {
-        // Buscar un doctor en la lista de doctores por su identificador
+        // Busca un doctor en la lista de doctores por su identificador
         for (Doctor doctor : doctores) {
             if (doctor.getId().equals(id)) {
                 return doctor;
+            }
+        }
+        return null;
+    }
+
+    private static Paciente buscarPaciente(String id) {
+        // Busca un paciente en la lista de pacientes por su identificador
+        for (Paciente paciente : pacientes) {
+            if (paciente.getId().equals(id)) {
+                return paciente;
             }
         }
         return null;
