@@ -10,6 +10,7 @@ public class Principal {
     // Esta es una lista de objetos de tipo Doctor, que se utiliza para almacenar los doctores registrados en el sistema.
     private static List<Doctor> doctores = new ArrayList<>();
     private static List<Paciente> pacientes = new ArrayList<>();
+    private static List<Cita> citas = new ArrayList<>();
 
     public static void main(String[] args) {
         int opcion;
@@ -25,10 +26,7 @@ public class Principal {
                         registrarPaciente();
                         break;
                     case 3:
-                        System.out.println(
-                                "En desarrollo..."
-                        );
-                        //crearCita();
+                        crearCita();
                         break;
                     case 4:
                         consultarDoctores();
@@ -37,10 +35,7 @@ public class Principal {
                         consultarPacientes();
                         break;
                     case 6:
-                        System.out.println(
-                                "En desarrollo..."
-                        );
-                        //consultarCitas();
+                        consultarCitas();
                         break;
                     case 7:
                         System.out.println(
@@ -152,6 +147,71 @@ public class Principal {
         );
     }
 
+    private static void crearCita() {
+        // Crea una nueva cita médica en el sistema
+        System.out.println();
+        System.out.println("=== CREAR CITA ===");
+        // Solicita al usuario el identificador de la cita
+        String id = leerTexto(
+                "Identificador de la cita: "
+        );
+        // Verifica si ya existe una cita con el mismo identificador
+        if (buscarCita(id) != null) {
+            System.out.println(
+                    "Ya existe una cita con ese identificador."
+            );
+            return;
+        }
+        // Solicita al usuario el identificador del doctor para la cita
+        String idDoctor = leerTexto(
+                "Identificador del doctor: "
+        );
+        // Busca el doctor correspondiente al identificador proporcionado
+        Doctor doctor = buscarDoctor(idDoctor);
+        // Verifica si el doctor existe en la lista de doctores registrados
+        if (doctor == null) {
+            System.out.println(
+                    "No existe un doctor con ese identificador."
+            );
+            return;
+        }
+        // Solicita al usuario el identificador del paciente para la cita
+        String idPaciente = leerTexto(
+                "Identificador del paciente: "
+        );
+        // Busca el paciente correspondiente al identificador proporcionado
+        Paciente paciente = buscarPaciente(idPaciente);
+        // Verifica si el paciente existe en la lista de pacientes registrados
+        if (paciente == null) {
+            System.out.println(
+                    "No existe un paciente con ese identificador."
+            );
+            return;
+        }
+        // Solicita al usuario la fecha y hora de la cita
+        String fechaHora = leerTexto(
+                "Fecha y hora: "
+        );
+        // Solicita al usuario el motivo de la cita
+        String motivo = leerTexto(
+                "Motivo de la cita: "
+        );
+        // Crea un nuevo objeto Cita con el identificador, fecha y hora, motivo, doctor y paciente proporcionados
+        Cita cita = new Cita(
+                id,
+                fechaHora,
+                motivo,
+                doctor,
+                paciente
+        );
+        // Por último, agrega la cita a la lista de citas registradas
+        citas.add(cita);
+        // archivoCSV.guardarCita(cita);
+        System.out.println(
+                "Cita registrada correctamente."
+        );
+    }
+
     private static void consultarDoctores() {
         // Consultar y mostrar la lista de doctores registrados en el sistema
         System.out.println();
@@ -182,6 +242,23 @@ public class Principal {
         }
     }
 
+    private static void consultarCitas() {
+        // Consultar y mostrar la lista de citas registradas en el sistema
+        System.out.println();
+        System.out.println("=== CITAS ===");
+        // Verifica si la lista de citas está vacía
+        if (citas.isEmpty()) {
+            System.out.println(
+                    "No hay citas registradas."
+            );
+            return;
+        }
+        // Recorre la lista de citas y muestra la información de cada cita en la consola
+        for (Cita cita : citas) {
+            System.out.println(cita);
+        }
+    }
+
     private static Doctor buscarDoctor(String id) {
         // Busca un doctor en la lista de doctores por su identificador
         for (Doctor doctor : doctores) {
@@ -197,6 +274,16 @@ public class Principal {
         for (Paciente paciente : pacientes) {
             if (paciente.getId().equals(id)) {
                 return paciente;
+            }
+        }
+        return null;
+    }
+
+    private static Cita buscarCita(String id) {
+        // Busca una cita en la lista de citas por su identificador
+        for (Cita cita : citas) {
+            if (cita.getId().equals(id)) {
+                return cita;
             }
         }
         return null;
