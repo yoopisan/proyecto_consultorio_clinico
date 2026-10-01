@@ -11,8 +11,14 @@ public class Principal {
     private static List<Doctor> doctores = new ArrayList<>();
     private static List<Paciente> pacientes = new ArrayList<>();
     private static List<Cita> citas = new ArrayList<>();
+    // Esta es una instancia de la clase ArchivoCSV, que se utiliza para cargar y guardar los datos de doctores, pacientes y citas en archivos CSV.
+    private static ArchivoCSV archivoCSV;
 
     public static void main(String[] args) {
+        // Primero que nada se crea una instancia de la clase ArchivoCSV para manejar la carga y guardado de datos en archivos CSV
+        archivoCSV = new ArchivoCSV();
+        // Luego se llama a la función cargarInformacion() para cargar los datos de doctores, pacientes y citas desde los archivos CSV correspondientes
+        cargarInformacion();
         int opcion;
         do {
             mostrarMenu();
@@ -76,6 +82,19 @@ public class Principal {
         System.out.println("=================================");
     }
 
+    private static void cargarInformacion() {
+        // Cargar la información de doctores, pacientes y citas desde los archivos CSV
+        doctores = archivoCSV.cargarDoctores();
+        pacientes = archivoCSV.cargarPacientes();
+        citas = archivoCSV.cargarCitas(
+                doctores,
+                pacientes
+        );
+        System.out.println(
+                "Información cargada correctamente."
+        );
+    }
+
     private static void registrarDoctor() {
         // Registra un nuevo doctor en el sistema
         System.out.println();
@@ -106,7 +125,8 @@ public class Principal {
         );
         // Agrega el doctor a la lista de doctores registrados
         doctores.add(doctor);
-        // archivoCSV.guardarDoctor(doctor);
+        // Se guarda el doctor en el archivo CSV correspondiente
+        archivoCSV.guardarDoctor(doctor);
         System.out.println(
                 "Doctor registrado correctamente."
         );
@@ -140,7 +160,8 @@ public class Principal {
         );
         // Agregar el paciente a la lista de pacientes registrados
         pacientes.add(paciente);
-        // archivoCSV.guardarPaciente(paciente);
+        // Se guarda el paciente en el archivo CSV correspondiente
+        archivoCSV.guardarPaciente(paciente);
         // Imprime un mensaje indicando que el paciente ha sido registrado correctamente
         System.out.println(
                 "Paciente registrado correctamente."
@@ -206,7 +227,8 @@ public class Principal {
         );
         // Por último, agrega la cita a la lista de citas registradas
         citas.add(cita);
-        // archivoCSV.guardarCita(cita);
+        // Se guarda la cita en el archivo CSV correspondiente
+        archivoCSV.guardarCita(cita);
         System.out.println(
                 "Cita registrada correctamente."
         );
