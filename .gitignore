@@ -37,4 +37,8 @@ target/
 *.class
 
 # Archivos temporales
+<<<<<<< HEAD
 .DS_Store
+=======
+.DS_Store
+>>>>>>> b8249c5e8ccf1cbd7c92da9acd838eb565b6213c
