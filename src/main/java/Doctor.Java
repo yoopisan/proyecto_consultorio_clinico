@@ -1,5 +1,3 @@
-package proyecto_consultorio_clinico;
-
 public class Doctor {
     // Atributos correspondiente, solicitados en el enunciado del proyecto
     private String id;

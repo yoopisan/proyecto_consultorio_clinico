@@ -1,5 +1,3 @@
-package proyecto_consultorio_clinico;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
